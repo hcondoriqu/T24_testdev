@@ -1,0 +1,46 @@
+from atexit import register
+import smbus
+import time
+import sys
+import math
+import RPi.GPIO as GPIO
+
+
+def set_dac(register, VDAC):
+
+    bus = smbus.SMBus(1)
+
+    DAC_Address = int(0x4A)  # DAC address
+    Register_address = int(register)
+
+    ## Check next 3 lines
+
+    Din_float = (4095 / 3.3) * VDAC
+    Din_int = round(Din_float)
+
+    Din_bin = bin(Din_int)
+
+    length = len(Din_bin) - 2  # Remove 0b on 0bxxxxx
+
+    if length < 5:
+        Din_MSB = 0
+        Din_LSB = Din_int << 4
+
+    else:
+        Din_MSB = Din_int >> 4
+        Din_LSB = Din_int & 0b0000000011111
+        Din_LSB = Din_LSB << 4
+
+    Din_array = [Din_MSB, Din_LSB]
+    bus.write_i2c_block_data(DAC_Address, Register_address, Din_array)
+
+
+def main():
+    ## Sets the DAC register 0 to 2 V
+    register = 0
+    VDAC = 2
+    set_dac(register, VDAC)
+
+
+if __name__ == "__main__":
+    main()
