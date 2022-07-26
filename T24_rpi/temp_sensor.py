@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 # I2C driver to get temperature data on T24 RF Boards
-from distutils.util import change_root
-import re
+
 import smbus
 import time
 import sys
@@ -21,7 +20,9 @@ def get_temp(ch):
     bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
     
     Reg_SEL = 0x00 # Temperature Register
-    TempSen_address = chan_map[ch]
+    
+    TempSen_address = chan_map{ch} 
+
     Data_read = bus.read_i2c_block_data(TempSen_address,Reg_SEL)
     Data_MSB = Data_read[0] << 8
     Data_LSB = Data_read[1]
