@@ -36,10 +36,11 @@ def set_dac(register, vdac):
 
 def main():
     ## Sets the DAC register 0 to 2 V
-    reg = 0
+
     vdac = 2
-    set_dac(reg, vdac)
-    print("DAC ch0 set ! ")
+    for reg in [0, 1, 2, 3]:
+        set_dac(reg, vdac)
+        print("DAC  ch" + str(reg) + " set!")
 
 
 if __name__ == "__main__":
