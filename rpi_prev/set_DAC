@@ -9,7 +9,7 @@ def set_dac(register, vdac):
 
     bus = smbus.SMBus(1)
 
-    dac_address = int(0x4A)  # DAC address
+    dac_address = int(0x4F)  # DAC address
     register_address = int(register)
 
     ## Check next 3 lines
