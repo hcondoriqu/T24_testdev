@@ -1,4 +1,3 @@
-from atexit import register
 import smbus
 import time
 import sys
@@ -6,40 +5,41 @@ import math
 import RPi.GPIO as GPIO
 
 
-def set_dac(register, VDAC):
+def set_dac(register, vdac):
 
     bus = smbus.SMBus(1)
 
-    DAC_Address = int(0x4A)  # DAC address
-    Register_address = int(register)
+    dac_address = int(0x4A)  # DAC address
+    register_address = int(register)
 
     ## Check next 3 lines
 
-    Din_float = (4095 / 3.3) * VDAC
-    Din_int = round(Din_float)
+    din_float = (4095 / 3.3) * vdac
+    din_int = round(din_float)
 
-    Din_bin = bin(Din_int)
+    din_bin = bin(din_int)
 
-    length = len(Din_bin) - 2  # Remove 0b on 0bxxxxx
+    length = len(din_bin) - 2  # Remove 0b on 0bxxxxx
 
     if length < 5:
         Din_MSB = 0
-        Din_LSB = Din_int << 4
+        Din_LSB = din_int << 4
 
     else:
-        Din_MSB = Din_int >> 4
-        Din_LSB = Din_int & 0b0000000011111
+        Din_MSB = din_int >> 4
+        Din_LSB = din_int & 0b0000000011111
         Din_LSB = Din_LSB << 4
 
     Din_array = [Din_MSB, Din_LSB]
-    bus.write_i2c_block_data(DAC_Address, Register_address, Din_array)
+    bus.write_i2c_block_data(dac_address, register_address, Din_array)
 
 
 def main():
     ## Sets the DAC register 0 to 2 V
-    register = 0
-    VDAC = 2
-    set_dac(register, VDAC)
+    reg = 0
+    vdac = 2
+    set_dac(reg, vdac)
+    print("DAC ch0 set ! ")
 
 
 if __name__ == "__main__":
