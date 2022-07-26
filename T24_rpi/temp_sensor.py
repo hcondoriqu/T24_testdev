@@ -48,7 +48,7 @@ def get_data():
     channels = ["ch0", "ch1", "ch2", "ch3"]
     for ch in channels:
         temp = get_temp(ch)
-        print("Temp degC " + ch + " :" + temp)
+        print("Temp degC " + ch + " : " + str(temp))
     return None
 
 
