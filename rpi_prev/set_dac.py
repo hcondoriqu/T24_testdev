@@ -36,7 +36,7 @@ def set_dac(ch_dac, vdac):
 
     else:
         data_msb = din_int >> 4
-        data_lsb = din_int & 0b000000001111
+        data_lsb = din_int & 0b0000000011111
         data_lsb = data_lsb << 4
 
     data_array = [data_msb, data_lsb]
