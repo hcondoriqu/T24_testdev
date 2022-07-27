@@ -76,7 +76,7 @@ def spi_peek(address):
   GPIO.output(SPI_SS_PIN, 1)
   address = address >> 1
   #print "debug:{}".format(data)
-  print "FPGA READ A:0x{:02x} D:0x{:04x}".format(address, data)
+  print ("FPGA READ A:0x{:02x} D:0x{:04x}".format(address, data))
 
 
 
@@ -94,7 +94,7 @@ def spi_poke(address,write_value):
   GPIO.output(SPI_SS_PIN, 1)
   address = address >> 1
 
-  print "FPGA WRITE A:0x{:02x} D:0x{:04x}".format(address,write_value)
+  print ("FPGA WRITE A:0x{:02x} D:0x{:04x}".format(address,write_value))
 
 def send_byte(value):
 
