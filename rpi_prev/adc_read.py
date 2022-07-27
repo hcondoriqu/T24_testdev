@@ -11,46 +11,50 @@ import RPi.GPIO as GPIO
 bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
 
 
-def get_adc(reg):
+def get_adc():
 
-    reg_sel = reg  # ADC Register
+    reg_sel = 0x1  # Voltage conversion result register
     adc_i2c_address = 0x2F
     i2c_bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
-
-    reg_sel = 0x00  # Temperature Register
-
     data_read = i2c_bus.read_i2c_block_data(adc_i2c_address, reg_sel)
-    data_msb = data_read[0] << 8
+    print("Data read binary: ", data_read)
+    data_msb = data_read[0]
+
     data_lsb = data_read[1]
+
     data_comb = data_msb | data_lsb
-    adc_bin = data_comb >> 5  # change to 11bit
+    adc_bin = data_comb
 
-    # check negative temp bit status
-    neg_data_check = adc_bin & 0b10000000000
-    neg_bit_check = neg_data_check >> 10
-
-    if neg_bit_check == 0:
-        adc_read = adc_bin * 0.125
-        # print ("Temp degC: ", temp_read)
-
-    else:
-        adc_read = adc_bin ^ 0b11111111111
-        adc_read = adc_read + 1
-        adc_read = adc_read * -0.125
-        # print ("Qorvo1 Temp degC: -", temp_read)
-
-    return adc_read
+    return adc_bin
 
 
-def get_data(reg):
-    data = get_adc(reg)
-    print("ADC reading " + str(reg) + " : " + str(data))
+def write_reg(ch_dac):
+    """Writes into the command register on the ADC"""
+
+    bus = smbus.SMBus(1)
+    # For the 610-00298 0x2F is the ADC address
+    adc_i2c_address = 0x2F
+
+    register_address = 0x0
+    ## address pointing register
+    data_1 = 0x0  ## points to the command register
+    data_msb = 0x1  ## Ch0
+    data_lsb = 0x0  ## configuration register
+    data_array = [data_1, data_msb, data_lsb]
+    bus.write_i2c_block_data(adc_i2c_address, register_address, data_array)
+
+
+def get_data():
+    # write into the command register the channel that we would need access
+    ch_n = 0
+    write_reg(ch_n)
+    data = get_adc()
+    print("ADC reading " + " : " + str(data))
 
 
 def main():
-    reg_map = [1, 2, 3, 4, 5, 6, 7, 8]
-    for reg in reg_map:
-        get_data(reg)
+
+    get_data()
 
 
 if __name__ == "__main__":
