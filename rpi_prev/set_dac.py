@@ -25,7 +25,7 @@ def set_dac(ch_dac, vdac):
     # first eight bits: D[11:4] sent on MSB [7:0]
     # last four bits  : D[3:0]  sent on LSB[7:4]
     # LSB[3:0] is filled with ceros
-    din_float = (4095 / 3.3) * vdac
+    din_float = (4095 / 3) * vdac
     din_int = round(din_float)
     din_bin = bin(din_int)
     length = len(din_bin) - 2  # Remove 0b on 0bxxxxx
