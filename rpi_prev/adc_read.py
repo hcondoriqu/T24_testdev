@@ -23,7 +23,7 @@ def get_data():
     adc_i2c_address = 0x2F
 
     i2c_bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
-    data_read = i2c_bus.bus.read_word_data(adc_i2c_address, reg_sel)
+    data_read = i2c_bus.read_word_data(adc_i2c_address, reg_sel)
     print("Data read binary: ", data_read)
     return data_read
 
