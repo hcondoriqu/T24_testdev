@@ -25,7 +25,9 @@ def get_data():
     i2c_bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
     data_read = i2c_bus.read_word_data(adc_i2c_address, reg_sel)
     print("Data read binary: ", data_read)
-    return data_read
+    data_read2 = i2c_bus.read_i2c_block_data(adc_i2c_address, reg_sel)
+    print("Data read binary: ", data_read2)
+    return data_read2
 
 
 def write_data(data_w):
@@ -50,16 +52,29 @@ def get_adc():
     """
     # Debug step 1
 
-    data_w = 0x0001
+    data_w = 0x0002
     write_data(data_w)
     data = get_data()
-    print("ADC reading 0x000001" + " : " + str(data))
+    print("ADC reading" + str(data_w) + " : " + str(data))
 
     # Debug step 2
-    data_w = 0x010000
+    data_w = 0x020000
     write_data(data_w)
     data = get_data()
-    print("ADC reading 0x010000" + " : " + str(data))
+    print("ADC reading" + str(data_w) + " : " + str(data))
+
+    # Debug step 3
+
+    data_w = 0x0004
+    write_data(data_w)
+    data = get_data()
+    print("ADC reading" + str(data_w) + " : " + str(data))
+
+    # Debug step 4
+    data_w = 0x040000
+    write_data(data_w)
+    data = get_data()
+    print("ADC reading" + str(data_w) + " : " + str(data))
 
 
 def main():
