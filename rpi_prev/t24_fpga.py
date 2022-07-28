@@ -1,6 +1,6 @@
 """SPI Bus control for Raspberry Pi 3b"""
 
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 
 class Spi:

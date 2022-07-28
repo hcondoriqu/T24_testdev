@@ -1,8 +1,9 @@
 import t24_fpga
-
-
 class SHF:
-    """SHF wrapper class (RF board only)"""
+    """SHF wrapper class 
+    RF board only connected to a Rpi
+    via an interface board
+    """
     def __init__(self):
         """Initialize rf_cpld class
         """
