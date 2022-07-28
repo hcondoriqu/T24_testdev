@@ -27,7 +27,8 @@ def get_data():
     print("Data read binary: ", data_read)
     data_read2 = i2c_bus.read_i2c_block_data(adc_i2c_address, reg_sel)
     print("Data read binary: ", data_read2)
-    return data_read2
+    data_read3 = [hex(h1) for h1 in data_read2]
+    return data_read3
 
 
 def write_data(data_w):
@@ -55,26 +56,45 @@ def get_adc():
     data_w = 0x0002
     write_data(data_w)
     data = get_data()
-    print("ADC reading" + str(data_w) + " : " + str(data))
+    print("ADC reading" + hex(data_w) + " : " + str(data))
 
     # Debug step 2
     data_w = 0x020000
     write_data(data_w)
     data = get_data()
-    print("ADC reading" + str(data_w) + " : " + str(data))
+    print("ADC reading " + hex(data_w) + " : " + str(data))
 
     # Debug step 3
 
     data_w = 0x0004
     write_data(data_w)
     data = get_data()
-    print("ADC reading" + str(data_w) + " : " + str(data))
+    print("ADC reading" + hex(data_w) + " : " + str(data))
 
     # Debug step 4
     data_w = 0x040000
     write_data(data_w)
     data = get_data()
-    print("ADC reading" + str(data_w) + " : " + str(data))
+    print("ADC reading" + hex(data_w) + " : " + str(data))
+
+    # Debug step 5
+
+    data_w = 0x0008
+    write_data(data_w)
+    data = get_data()
+    print("ADC reading" + hex(data_w) + " : " + str(data))
+
+    # Debug step 6
+    data_w = 0x080000
+    write_data(data_w)
+    data = get_data()
+    print("ADC reading" + hex(data_w) + " : " + str(data))
+
+    # Debug step 7
+    data_w = 0xA000
+    write_data(data_w)
+    data = get_data()
+    print("ADC reading" + hex(data_w) + " : " + str(data))
 
 
 def main():
