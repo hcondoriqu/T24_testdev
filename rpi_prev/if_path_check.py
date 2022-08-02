@@ -50,6 +50,7 @@ def main():
     out_df = pd.DataFrame(out_np, columns=["if_dsa", "output power"])
     sheet_name = "DSA_ch0"
     out_df.to_excel(file_out, sheet_name)
+    file_out.save()
 
 
 if __name__ == "__main__":
