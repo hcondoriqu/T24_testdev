@@ -1,8 +1,9 @@
 import t24_rf
 from hw_qa_tools.fsw import SpectrumAnalyzer
-fsw = SpectrumAnalyzer('10.13.23.69')
+fsw = SpectrumAnalyzer('10.13.23.78')
 import pandas as pd
 import numpy as np
+import time
 def main():
 
     file_out = pd.ExcelWriter('output_if_rpi.xlsx')
@@ -29,7 +30,7 @@ def main():
         trf.set_mode("rx", [0])
         trf.set_mode("tx", [0])
     # check path 0
-    path = 0;
+    path = 1;
     if_dsa = np.arange(0,31.5,0.5)
     for dsa in if_dsa:
         trf.set_rf_tx_attenuator(pol,path,dsa)
@@ -37,7 +38,8 @@ def main():
         trf.set_mode("tx", [0])
         data = fsw.get_peak()
         results.append(data)
-        
+        print("DSA atten = "+str(dsa)+" dB, peak power = "+str(data))
+        time.pause(1)
 
     # store data on file
     out_np   = np.column_stack([if_dsa,results])
