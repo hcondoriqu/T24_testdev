@@ -8,7 +8,7 @@ def main():
 
     file_out = pd.ExcelWriter('output_if_rpi.xlsx')
 
-    trf = t24_rf.SHF("rf")
+    trf = t24_rf.SHF()
     pol = 0 # Vertical
     # Parameters for testing
     

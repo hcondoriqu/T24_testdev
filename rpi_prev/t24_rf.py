@@ -9,7 +9,7 @@ class SHF:
 
     def __init__(self):
         """Initialize rf_cpld class"""
-        self.fpga = t24_fpga.spi("rf")
+        self.fpga = t24_fpga.Spi("rf")
 
     def read_rf_register(self, shf_id: int, address: int, read_tries: int = 5) -> int:
         """Read a value from a RF FPGA register
