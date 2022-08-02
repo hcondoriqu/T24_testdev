@@ -17,6 +17,7 @@ class Spi:
             self.type = "rf"
         else:
             raise IOError('incorrect cpld_type.  Only  "rf" available')
+        self.config()
 
     def config(self):
         """Configure GPIO on RP3"""
