@@ -6,7 +6,8 @@ import time
 import sys
 import math
 import RPi.GPIO as GPIO
-
+import pandas as pd
+import numpy
 
 bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
 
@@ -51,25 +52,22 @@ def get_adc():
     1. write into the command register the channel number to read from
     2. Read on the voltage conversion register Address = 0x01
     """
+    p = np.arange(0, 16)
     # Debug step 1
 
-    data_w = 0x0002
-    write_data(data_w)
-    data = get_data()
-    print("ADC reading" + hex(data_w) + " : " + str(data))
-
-    # Debug step 2
     data_w = 0x020000
     write_data(data_w)
     data = get_data()
     print("ADC reading " + hex(data_w) + " : " + str(data))
+    # Debug step 2
 
-    # Debug step 3
+    for rs in p:
+        # Debug step 3
 
-    data_w = 0x0004
-    write_data(data_w)
-    data = get_data()
-    print("ADC reading" + hex(data_w) + " : " + str(data))
+        data_w = rs
+        write_data(data_w)
+        data = get_data()
+        print("ADC reading" + hex(data_w) + " : " + str(data))
 
     # Debug step 4
     data_w = 0x040000
