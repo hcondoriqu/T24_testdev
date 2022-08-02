@@ -23,7 +23,7 @@ def main():
     trf.set_lo_attenuator(pol, lo_dsa)
     trf.set_rf_tx_attenuator(pol, path, if_tx_atten)
     # trf.rf_cpld.write_register(0 = RF_V,Reg = 3,Mode = 3,Read_Back = True)
-    trf.rf_cpld.write_register(0, 3, 3, True)
+    trf.write_rf_register(0, 3, 3, True)
     trf.set_mode("tx", [0])
     results = []
     chain = [0, 1, 2, 3]
