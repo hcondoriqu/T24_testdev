@@ -69,13 +69,13 @@ class Spi:
         # For register reads, need to set final bit to 1
         address <<= 0x1
         address |= 0x1
-
-        GPIO.output((self.ss_pin, self.sclk_pin), GPIO.LOW)
+        GPIO.output(self.ss_pin, 0)
+        GPIO.output(self.sclk_pin, 0)
 
         self.send_byte(address)
         data = self.read16()
 
-        GPIO.output(self.ss_pin, GPIO.HIGH)
+        GPIO.output(self.ss_pin, 1)
         address = address >> 1
 
         # print("CPLD READ A:0x{:02x} D:0x{:04x}".format(address, data))
@@ -90,12 +90,13 @@ class Spi:
 
         upper = write_value >> 8
         lower = write_value & 255
-        GPIO.output((self.ss_pin, self.sclk_pin), GPIO.LOW)
+        GPIO.output(self.ss_pin, 0)
+        GPIO.output(self.sclk_pin, 0)
 
         for i in (address, upper, lower):
             self.send_byte(i)
 
-        GPIO.output(self.ss_pin, GPIO.HIGH)
+        GPIO.output(self.ss_pin, 1)
         address = address >> 1
 
         # print("CPLD WRITE A:0x{:02x} D:0x{:04x}".format(address, write_value))
