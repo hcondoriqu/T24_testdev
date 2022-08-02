@@ -36,7 +36,7 @@ def main():
         trf.set_rf_tx_attenuator(pol,path,dsa)
         trf.set_mode("rx", [0])
         trf.set_mode("tx", [0])
-        data = fsw.get_peak()
+        data = fsw.get_peak(1)
         results.append(data)
         print("DSA atten = "+str(dsa)+" dB, peak power = "+str(data))
         time.pause(1)
