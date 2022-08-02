@@ -40,7 +40,8 @@ def main():
         trf.set_mode("rx", [0])
         trf.set_mode("tx", [0])
         data = fsw.get_peak(1)
-        results.append(data)
+        results.append(data[1])
+
         print("DSA atten = " + str(dsa) + " dB, peak power = " + str(data))
         time.sleep(1)
 
