@@ -68,7 +68,7 @@ class SPI_ADMV:
             self.send_byte(i)
 
         self.unselect_admv()
-
+        return write_value
         # print(
         #     "ADMV {:1d} WRITE A:0x{:04x} D:0x{:02x}".format(
         #         device, address, write_value
