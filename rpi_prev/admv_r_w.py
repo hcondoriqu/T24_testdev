@@ -52,7 +52,7 @@ class SPI_ADMV:
 
         self.unselect_admv()  # de-assert ADMV csn
         # print "debug:{}".format(data)
-        print("ADMV {:1d} READ A:0x{:04x} D:0x{:02x}".format(device, address, data))
+        # print("ADMV {:1d} READ A:0x{:04x} D:0x{:02x}".format(device, address, data))
         return data
 
     def spi_poke(self, device, address, write_value):
@@ -69,10 +69,10 @@ class SPI_ADMV:
 
         self.unselect_admv()
 
-        print(
-            "ADMV {:1d} WRITE A:0x{:04x} D:0x{:02x}".format(
-                device, address, write_value
-            )
+        # print( 
+        #     "ADMV {:1d} WRITE A:0x{:04x} D:0x{:02x}".format(
+        #         device, address, write_value
+        #     )
         )
 
     def send_byte(self, value):
@@ -106,7 +106,7 @@ class SPI_ADMV:
         self.i2c_tx_byte(address)  # write register address
         self.i2c_tx_byte(data)  # write data
         self.i2c_stop()
-        print("PCA9555 reg write A:0x{:1x} D:0x{:02x}".format(address, data))
+        # print("PCA9555 reg write A:0x{:1x} D:0x{:02x}".format(address, data))
 
     def pca9555_admv_init(self):
         self.i2c_init()
@@ -201,7 +201,7 @@ class SPI_ADMV:
         # print "debug: ack =",ack
 
         if ack_val == 1:
-            print("no slave ACK")
+            # print("no slave ACK")
         # else:
         #    print "slave ACK"
 
