@@ -49,6 +49,10 @@ SPI_MISO_PIN = 21
 
 def main():
     if len(sys.argv) < 4 or len(sys.argv) > 5:
+        device = int(sys.argv[2], 16)  # Device number (0-3)
+        address = int(sys.argv[3], 16)  # Register address (up to 15 bits)
+        print(device)
+        print(address)
         sys.exit(usage)
 
     # Process parameters - convert to integers
