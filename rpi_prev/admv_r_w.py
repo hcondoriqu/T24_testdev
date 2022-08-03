@@ -73,7 +73,7 @@ class SPI_ADMV:
         #     "ADMV {:1d} WRITE A:0x{:04x} D:0x{:02x}".format(
         #         device, address, write_value
         #     )
-        )
+        # )
 
     def send_byte(self, value):
 
