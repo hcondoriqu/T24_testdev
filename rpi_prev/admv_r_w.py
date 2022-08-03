@@ -69,7 +69,7 @@ class SPI_ADMV:
 
         self.unselect_admv()
 
-        # print( 
+        # print(
         #     "ADMV {:1d} WRITE A:0x{:04x} D:0x{:02x}".format(
         #         device, address, write_value
         #     )
@@ -200,8 +200,8 @@ class SPI_ADMV:
         ack_val = self.i2c_read_ack()
         # print "debug: ack =",ack
 
-        if ack_val == 1:
-            # print("no slave ACK")
+        # if ack_val == 1:
+        # print("no slave ACK")
         # else:
         #    print "slave ACK"
 
