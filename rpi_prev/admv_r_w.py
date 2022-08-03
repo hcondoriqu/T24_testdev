@@ -37,6 +37,9 @@ class SPI_ADMV:
         GPIO.setup([self.ss_pin, self.sclk_pin, self.mosi_pin], GPIO.IN)
 
     def spi_peek(self, device, address):
+        self.spi_init()
+        self.i2c_init()
+        self.pca9555_admv_init()
         # send address (16 bits)
         # capture 8-bit read value
 
@@ -53,9 +56,16 @@ class SPI_ADMV:
         self.unselect_admv()  # de-assert ADMV csn
         # print "debug:{}".format(data)
         # print("ADMV {:1d} READ A:0x{:04x} D:0x{:02x}".format(device, address, data))
+        self.pca9555_admv_cleanup()
+        self.spi_cleanup()
+        self.i2c_init()
         return data
 
     def spi_poke(self, device, address, write_value):
+        self.spi_init()
+        self.i2c_init()
+        self.pca9555_admv_init()
+
         # calculate the 3 bytes to be written
         byte1 = (address >> 8) & 0x7F
         byte2 = address & 0xFF
@@ -68,6 +78,9 @@ class SPI_ADMV:
             self.send_byte(i)
 
         self.unselect_admv()
+        self.pca9555_admv_cleanup()
+        self.spi_cleanup()
+        self.i2c_init()
         return write_value
         # print(
         #     "ADMV {:1d} WRITE A:0x{:04x} D:0x{:02x}".format(
