@@ -7,7 +7,7 @@ import sys
 import RPi.GPIO as GPIO
 
 
-class Mix_admv:
+class SPI_ADMV:
     def __init__(self, spi_type):
         """Define pins based on cpld_type"""
         if spi_type.lower() == "admv":
@@ -53,6 +53,7 @@ class Mix_admv:
         self.unselect_admv()  # de-assert ADMV csn
         # print "debug:{}".format(data)
         print("ADMV {:1d} READ A:0x{:04x} D:0x{:02x}".format(device, address, data))
+        return data
 
     def spi_poke(self, device, address, write_value):
         # calculate the 3 bytes to be written
@@ -265,16 +266,7 @@ class Mix_admv:
 
 def main():
     #
-    # if len(sys.argv) < 4 or len(sys.argv) > 5:
-    ###     device = int(sys.argv[2], 16)  # Device number (0-3)
-    ###    address = int(sys.argv[3], 16)  # Register address (up to 15 bits)
-    #     print(device)
-    #     print(address)
-    #     sys.exit(usage)
-    mixer = Mix_admv
-    address1 = int(0x20C)
-    device1 = 0
-    mixer.spi_peek(device1, address1)
+    return None
 
 
 if __name__ == "__main__":
