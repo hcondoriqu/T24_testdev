@@ -62,7 +62,7 @@ def main():
     """
     # Sets all DAC channels to  2 V
     channels = ["ch0", "ch1", "ch2", "ch3"]
-    vdac = 0.5
+    vdac = 0.1
     for ch_dac in channels:
         set_dac(ch_dac, vdac)
         print("DAC " + ch_dac + " set!")
