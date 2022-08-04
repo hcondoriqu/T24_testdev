@@ -68,6 +68,7 @@ class Spi:
         # capture 16-bit read value
 
         # For register reads, need to set final bit to 1
+        self.config()
         address <<= 0x1
         address |= 0x1
         GPIO.output(self.ss_pin, 0)
@@ -87,6 +88,7 @@ class Spi:
         """Write <write_value> at register <address>"""
 
         # shift left 1 (leaving zero at bit 0) for write
+        self.config()
         address <<= 0x1
 
         upper = write_value >> 8
