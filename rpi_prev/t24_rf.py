@@ -20,6 +20,7 @@ class SHF:
         :return:
         """
         data = self.fpga.peek(address)
+        self.fpga.config()
         return data
 
     def write_rf_register(
@@ -35,6 +36,7 @@ class SHF:
         """
 
         value = int(value)
+        self.fpga.config()
         self.fpga.poke(address, value)
 
     def set_lo_attenuator(self, shf_id: int, atten_db: int) -> int:
