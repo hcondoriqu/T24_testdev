@@ -3,11 +3,10 @@ import time
 import sys
 import math
 import RPi.GPIO as GPIO
-import set_gpio
+import os
 
 
 def set_dac(ch_dac, vdac):
-    set_gpio.get_set_i2c_back()
     """Sets the DAC 7574 on the RF board
 
     Args:
@@ -17,6 +16,7 @@ def set_dac(ch_dac, vdac):
     Returns:
         None
     """
+    set_i2c_back()
     ch_map = {"ch0": 0x10, "ch1": 0x12, "ch2": 0x14, "ch3": 0x16}
     bus = smbus.SMBus(1)
     # For the 610-00298 0x4F is the DAC address
@@ -43,6 +43,14 @@ def set_dac(ch_dac, vdac):
 
     data_array = [data_msb, data_lsb]
     bus.write_i2c_block_data(dac_address, register_address, data_array)
+
+
+def set_i2c_back():
+    bashCommand = "gpio -g mode 2 alt0"
+    os.system(bashCommand)
+    bashCommand = "gpio -g mode 3 alt0"
+    os.system(bashCommand)
+    return None
 
 
 def main():
