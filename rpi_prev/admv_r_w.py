@@ -59,6 +59,7 @@ class SPI_ADMV:
         self.pca9555_admv_cleanup()
         self.spi_cleanup()
         self.i2c_init()
+        self.i2c_stop()
         return data
 
     def spi_poke(self, device, address, write_value):
@@ -81,6 +82,7 @@ class SPI_ADMV:
         self.pca9555_admv_cleanup()
         self.spi_cleanup()
         self.i2c_init()
+        self.i2c_stop()
         return write_value
         # print(
         #     "ADMV {:1d} WRITE A:0x{:04x} D:0x{:02x}".format(
