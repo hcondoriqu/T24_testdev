@@ -3,9 +3,11 @@ import time
 import sys
 import math
 import RPi.GPIO as GPIO
+import set_gpio
 
 
 def set_dac(ch_dac, vdac):
+    set_gpio.get_set_i2c_back()
     """Sets the DAC 7574 on the RF board
 
     Args:
