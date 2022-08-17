@@ -17,7 +17,7 @@ def get_temp(ch):
     chan_map = {"ch0": 0x49, "ch1": 0x4C, "ch2": 0x4D, "ch3": 0x4A}
     bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
     # Step to debug I2C Error 121  IO error
-    print("adding time.sleep(1) to try to solce I2C IO error")
+    print("\n adding time.sleep(1) to try to solve I2C IO error \n")
     time.sleep(1)
     Reg_SEL = 0x00  # Temperature Register
 
