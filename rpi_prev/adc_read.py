@@ -25,15 +25,15 @@ def get_data():
 
     i2c_bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
 
-    data_read = bus.read_i2c_block_data(adc_i2c_address, reg_sel,2) # read 2 bytes
-    data_v =  (data_read[0] & 0b00001111 ) * 256 + data_read[1])
+    data_read = bus.read_i2c_block_data(adc_i2c_address, reg_sel, 2)  # read 2 bytes
+    data_v = (data_read[0] & 0b00001111) * 256 + data_read[1]
 
     return data_v
 
 
 def write_data(ch):
     """Writes into the command register on the ADC"""
-    ch_map = {0:0x80,1:0x40,2:0x20,3:0x10}
+    ch_map = {0: 0x80, 1: 0x40, 2: 0x20, 3: 0x10}
     bus = smbus.SMBus(1)
     # For the 610-00298 0x2F is the ADC address
     adc_i2c_address = 0x2F
@@ -53,16 +53,14 @@ def get_adc(ch):
     """
     write_data(ch)
     data = get_data()
-    return data 
-    
-    
-    
+    return data
 
 
 def main():
     ch = 0
     data_read = get_adc(ch)
-    print("data from adc on ch "+str(ch)+" : "+str(data))
+    print("data from adc on ch " + str(ch) + " : " + str(data))
+
 
 if __name__ == "__main__":
     main()
