@@ -24,7 +24,7 @@ def main():
 
     ch_v = ["ch0", "ch1", "ch2", "ch3"]
     # get drain current vs gate voltage
-    vg = np.arange(3, 0.5, -0.01)
+    vga = np.arange(3, 0.5, -0.01)
     file_out = pd.ExcelWriter("data_out.xlsx")
     print("sweep all channels")
     for ch in ch_v:
@@ -34,7 +34,7 @@ def main():
         id2 = []
         id3 = []
         vg = []
-        for vdac in vg:
+        for vdac in vga:
             vg.append(-vdac - 2.5)
             set_dac.set_dac(ch, vdac)
             # get current readings:
