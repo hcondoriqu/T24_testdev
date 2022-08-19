@@ -34,7 +34,7 @@ def get_data():
 
 def write_data(ch):
     """Writes into the command register on the ADC"""
-    ch_map = {0: 0x80, 1: 0x40, 2: 0x20, 3: 0x10}
+    ch_map = {"ch0": 0x80, "ch1": 0x40, "ch2": 0x20, "ch3": 0x10}
     bus = smbus.SMBus(1)
     # For the 610-00298 0x2F is the ADC address
     adc_i2c_address = 0x2F
@@ -58,7 +58,7 @@ def get_adc(ch):
 
 
 def main():
-    ch = 0
+    ch = "ch0"
     data_read = get_adc(ch)
     print("data from adc on ch " + str(ch) + " : " + str(data_read))
 

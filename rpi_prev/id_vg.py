@@ -1,19 +1,60 @@
 import set_dac
 import adc_read
 import numpy as np
+import pandas as pd
+
+
+def init_dac():
+    ch_v = ["ch0", "ch1", "ch2", "ch3"]
+    for ch in ch_v:
+        set_dac.set_dac(ch, 3)
+
+
+def get_id_all():
+    ch_v = ["ch0", "ch1", "ch2", "ch3"]
+    out_data = []
+
+    for ch in ch_v:
+        out_data.append(adc_read.get_adc(ch) * 200)
+    return out_data
 
 
 def main():
-    ch = 0
-    st_ch = "ch" + str(ch)
+    init_dac()
+
+    ch_v = ["ch0", "ch1", "ch2", "ch3"]
     # get drain current vs gate voltage
     vg = np.arange(3, 0.5, -0.01)
-    for vdac in vg:
-        set_dac.set_dac(st_ch, vdac)
-        t = adc_read.get_adc(ch)
-        t = t * 200
-        print("Drain current ", t)
-    set_dac.set_dac(st_ch, 3)
+    file_out = pd.ExcelWriter("data_out.xlsx")
+
+    for ch in ch_v:
+
+        id0 = []
+        id1 = []
+        id2 = []
+        id3 = []
+        vg = []
+        for vdac in vg:
+            vg.append(-vdac - 2.5)
+            set_dac.set_dac(ch, vdac)
+            # get current readings:
+            out_data = get_id_all()
+
+            id0.append(out_data[0])
+            id1.append(out_data[1])
+            id2.append(out_data[2])
+            id3.append(out_data[3])
+            print("Drain current ", out_data)
+
+        sheet_name = ch
+        out_np = np.column_stack([vg, id0, id1, id2, id3])
+        out_df = pd.DataFrame(
+            out_np, columns=["Vg", "Id0 (mA)", "Id1 (mA)", "Id2 (mA)", "Id3 (mA)"]
+        )
+        out_df.to_excel(file_out, sheet_name)
+        init_dac()
+
+    file_out.save()
 
 
 if __name__ == "__main__":
