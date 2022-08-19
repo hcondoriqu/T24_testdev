@@ -24,7 +24,7 @@ def main():
 
     ch_v = ["ch0", "ch1", "ch2", "ch3"]
     # get drain current vs gate voltage
-    vdac_v = np.arange(3, 0.4, -0.01)
+    vdac_v = np.arange(3, 0.4, -0.001)
     file_out = pd.ExcelWriter("data_out.xlsx")
     print("sweep all channels")
     for ch in ch_v:
