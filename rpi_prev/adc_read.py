@@ -27,7 +27,8 @@ def get_data():
 
     data_read = bus.read_i2c_block_data(adc_i2c_address, reg_sel, 2)  # read 2 bytes
     data_v = (data_read[0] & 0b00001111) * 256 + data_read[1]
-
+    # This data needs to be normalized to 2.5V/4096
+    data_v = data_v * 2.5 / 4096
     return data_v
 
 
@@ -59,7 +60,7 @@ def get_adc(ch):
 def main():
     ch = 0
     data_read = get_adc(ch)
-    print("data from adc on ch " + str(ch) + " : " + str(data))
+    print("data from adc on ch " + str(ch) + " : " + str(data_read))
 
 
 if __name__ == "__main__":
