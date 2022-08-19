@@ -26,9 +26,9 @@ def main():
     # get drain current vs gate voltage
     vg = np.arange(3, 0.5, -0.01)
     file_out = pd.ExcelWriter("data_out.xlsx")
-
+    print("sweep all channels")
     for ch in ch_v:
-
+        print("sweep ch: ", ch)
         id0 = []
         id1 = []
         id2 = []
