@@ -58,9 +58,15 @@ def get_adc(ch):
 
 
 def main():
-    ch = "ch0"
-    data_read = get_adc(ch)
-    print("data from adc on ch " + str(ch) + " : " + str(data_read))
+    ch_v = [
+        "ch0",
+        "ch1",
+        "ch2",
+        "ch3",
+    ]
+    for ch in ch_v:
+        data_read = get_adc(ch)
+        print("data from adc on ch " + str(ch) + " : " + str(data_read))
 
 
 if __name__ == "__main__":
