@@ -28,7 +28,7 @@ def main():
     file_out = pd.ExcelWriter("data_out.xlsx")
     print("sweep all channels")
     for ch in ch_v:
-        print("sweep ch: ", ch)
+        print("sweep ", ch)
         id0 = []
         id1 = []
         id2 = []
