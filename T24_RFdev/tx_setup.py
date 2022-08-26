@@ -1,6 +1,6 @@
-import lo
-import shf
-import mixer
+from titan24_prototypes.modules.lo import LO
+from titan24_prototypes.modules.shf import SHF
+from titan24_prototypes.modules.mixer import Mixer
 import time
 import qsr_mfg
 import time
@@ -15,8 +15,8 @@ def tx_set_ch(
     gate_dac: float = 0.8,
 ):
 
-    trf = shf.SHF("192.168.100.1")
-    tmix = mixer.Mixer("192.168.100.1")
+    trf = SHF("192.168.100.1")
+    tmix = Mixer("192.168.100.1")
 
     # set the modem to send packets
     tmod = qsr_mfg.QsrMfg()
@@ -45,7 +45,7 @@ def tx_set_ch(
 
 
 def get_pd_cw(shf_id, path):
-    trf = shf.SHF("192.168.100.1")
+    trf = SHF("192.168.100.1")
     # trf.if_cpld.write_register(5,0,True)
     r = trf.get_rf_sim_adc_voltages(shf_id, path, True)
     # print("power det ", r)
@@ -60,7 +60,7 @@ def set_lo(lo_freq, lo_dsa=10):
     # sets the frequency on the synth
     # sets the attenuation on the LO distribution
     # in the RF board
-    tlo = lo.LO("192.168.100.1")
+    tlo = LO("192.168.100.1")
     tlo.set_frequency_ghz(lo_freq)
     return None
 
@@ -72,8 +72,8 @@ def set_all_off(shf_id):
     # disables mixer
     # Set the gate to -5 V
     # all DSA for max values
-    trf = shf.SHF("192.168.100.1")
-    tmix = mixer.Mixer("192.168.100.1")
+    trf = SHF("192.168.100.1")
+    tmix = Mixer("192.168.100.1")
 
     # set the modem to stop sending packets
     tmod = qsr_mfg.QsrMfg()
