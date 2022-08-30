@@ -37,6 +37,7 @@ def main():
         trf.set_mode("tx", [pol])
     # check path 0
     if_dsa = np.arange(0, 31.5, 0.5)
+    input("Connect the input signal on path: " + str(path) + "\npress enter when done")
     for dsa in if_dsa:
         trf.set_rf_tx_attenuator(pol, path, dsa, True)
         trf.set_mode("rx", [pol])
@@ -44,7 +45,14 @@ def main():
         data = fsw.get_peak(1)
         results.append(data[1])
 
-        print("DSA atten = " + str(dsa) + " dB, peak power = " + str(data))
+        print(
+            "set Path= "
+            + str(path)
+            + "DSA atten = "
+            + str(dsa)
+            + " dB, peak power = "
+            + str(data)
+        )
         time.sleep(1)
 
     # store data on file
