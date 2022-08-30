@@ -30,7 +30,7 @@ def tx_set_ch(
 
     # Set IF DSA on the RF board.
     # print("IF attenuation = ", if_atten_db)
-    trf.set_rf_tx_attenuator(shf_id, path, if_atten_db)
+    trf.set_rf_tx_attenuator(shf_id, path, if_atten_db, True)
 
     # mixer
     tmix.enable_mixer(shf_id, path)
@@ -83,7 +83,7 @@ def set_all_off(shf_id):
     trf.set_lo_attenuator(shf_id, 31)
     for path in [0, 1, 2, 3]:
         # Set IF DSA on the RF board.
-        trf.set_rf_tx_attenuator(shf_id, path, 31.5)
+        trf.set_rf_tx_attenuator(shf_id, path, 31.5, True)
 
         # mixer
         tmix.disable_mixer(shf_id, path)
