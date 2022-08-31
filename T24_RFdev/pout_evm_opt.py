@@ -9,7 +9,7 @@ import time
 from hw_qa_tools.fsw import SpectrumAnalyzer
 
 
-fsw = SpectrumAnalyzer("10.13.23.68")
+fsw = SpectrumAnalyzer("10.13.23.90")
 
 
 def main():
@@ -20,22 +20,30 @@ def main():
     tmix = Mixer("192.168.100.1")
     pol = input("Pol H 1 ,v 0?")
     shf_id = int(pol)
-
+    info = input("path (0 1 2 3): ")
+    path_test = int(info)
+    lo_freq = float(input("LO frequency: [GHz] "))
+    # sets the LO frequency in the synth
+    tx_setup.set_lo(lo_freq)
     trf.set_mode("tx", [shf_id])
 
-    vdacm = np.arange(1, 0.6, -0.005)  # normally 1,0.6
+    vdacm = np.arange(0.7, 0.45, -0.005)  # normally 1,0.6
 
     t1 = input("Dac voltage? ")
     gate_dac = float(t1)
 
     mixer_atten2 = 0
-    t1 = input("mixer_atten 1 ?")
+    t1 = input("mixer_atten 1 ? ")
     mixer_atten1 = int(t1)
     t1 = input("if_atten")
     if_atten = int(t1)  # change to 15
     trf.set_mode("normal", [shf_id])
-
-    for path in [0]:
+    input(
+        "Connect the input signal on path: "
+        + str(path_test)
+        + "\npress enter when done"
+    )
+    for path in [path_test]:
         tx_setup.set_all_off(shf_id)
         tx_setup.tx_set_ch(shf_id, path, if_atten, mixer_atten1, mixer_atten2, gate_dac)
         time.sleep(1)
@@ -48,8 +56,6 @@ def main():
         vg = []
         if_att_l = []
 
-        print("change to channel: ", path)
-        input("ok")
         # results = fsw.get_wlan_results()
         target_power = 19
         att_if = trf.get_rf_tx_attenuator(shf_id, path)

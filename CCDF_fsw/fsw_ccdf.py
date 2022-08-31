@@ -1,11 +1,13 @@
-import visa
+import pyvisa as visa
 import time
 import pandas as pd
 import numpy as np
 
 
 def get_ccdf():
-    file_name = input("file name to save the data")
+    note = "This method assumes that: \nThe FSW is on CCDF mode \nThere is a CCDF curve is already measured"
+    print(note)
+    file_name = input("file name to save the data ")
     fname = file_name + ".xlsx"
     file_out = pd.ExcelWriter(fname)
     rm = visa.ResourceManager("@py")
