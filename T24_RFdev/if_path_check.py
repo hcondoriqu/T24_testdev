@@ -11,7 +11,7 @@ import time
 def main():
 
     trf = SHF()
-    info = input("Polarization ? 0 for Vor 1 for H ")
+    info = input("Polarization ? 0 for V, 1 for H ")
     pol = int(info)  # horizontal
     # Parameters for testing
 
