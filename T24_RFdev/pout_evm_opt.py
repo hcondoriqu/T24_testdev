@@ -16,8 +16,8 @@ def main():
     SN = input("SN?:")
     file_out = pd.ExcelWriter("bias_optim" + SN + ".xlsx")
 
-    trf = SHF("192.168.100.1")
-    tmix = Mixer("192.168.100.1")
+        trf = SHF("192.168.100.1")
+        tmix = Mixer("192.168.100.1")
     pol = input("Pol H 1 ,v 0?")
     shf_id = int(pol)
     info = input("path (0 1 2 3): ")
@@ -74,27 +74,31 @@ def main():
             time.sleep(0.5)
             rms_pwr = results["avg rms power"]
             evm_meas = results["avg EVM all"]
-
+            print("Settings before changing the IF DSA atten")
+            print(vd, rms_pwr2, evm_meas2)
             atten_int = int(2 * (rms_pwr - target_power + att_if))
             new_atten = atten_int / 2
             if new_atten < 0:
                 new_atten = 0
 
-            trf.set_rf_tx_attenuator(shf_id, path, new_atten)
-            print("new atten = ", new_atten)
+            trf.set_rf_tx_attenuator(shf_id, path, new_atten,True)
+            print("Set to new atten = ", new_atten)
             time.sleep(1)
-
-            results = fsw.get_wlan_results()
+            read_atten = trf.get_rf_tx_attenuator(shf_id, path)
+            print("Read atten RF board = ", read_atten)
+            
             time.sleep(0.5)
+            results = fsw.get_wlan_results()
+            
 
-            rms_pwr = results["avg rms power"]
-            evm_meas = results["avg EVM all"]
+            rms_pwr2 = results["avg rms power"]
+            evm_meas2 = results["avg EVM all"]
 
-            evm.append(evm_meas)
-            out_p.append(rms_pwr)
+            evm.append(evm_meas2)
+            out_p.append(rms_pwr2)
             if_att_l.append(new_atten)
-
-            print(vd, rms_pwr, evm_meas)
+            print("Settings after  adjusting the IF DSA atten to the target power")
+            print(vd, rms_pwr2, evm_meas2)
             trf.set_rf_tx_attenuator(shf_id, path, att_if)
 
         trf.set_rf_dac_voltage(shf_id, path, 2.99)
