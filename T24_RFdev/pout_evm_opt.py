@@ -75,7 +75,7 @@ def main():
             rms_pwr = results["avg rms power"]
             evm_meas = results["avg EVM all"]
             print("Settings before changing the IF DSA atten")
-            print(vd, rms_pwr2, evm_meas2)
+            print(vd, rms_pwr, evm_meas)
             atten_int = int(2 * (rms_pwr - target_power + att_if))
             new_atten = atten_int / 2
             if new_atten < 0:
