@@ -81,9 +81,10 @@ def main():
             if new_atten < 0:
                 new_atten = 0
 
-            trf.set_rf_tx_attenuator(shf_id, path, new_atten, True)
-
+            print("Path to set the IF DSA attenuator: ", path)
             print("Set to new atten = ", new_atten)
+
+            trf.set_rf_tx_attenuator(shf_id, path, new_atten, True)
             trf.set_mode("rx", [shf_id])
             time.sleep(0.4)
             trf.set_mode("tx", [shf_id])
@@ -103,6 +104,10 @@ def main():
             print("Settings after  adjusting the IF DSA atten to the target power")
             print(vd, rms_pwr2, evm_meas2)
             trf.set_rf_tx_attenuator(shf_id, path, att_if)
+
+            trf.set_mode("rx", [shf_id])
+            time.sleep(0.4)
+            trf.set_mode("tx", [shf_id])
 
         trf.set_rf_dac_voltage(shf_id, path, 2.99)
         out_np = np.column_stack([vdac, out_p, evm, temp, id12, vg, if_att_l])
