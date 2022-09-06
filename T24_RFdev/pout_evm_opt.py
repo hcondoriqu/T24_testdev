@@ -16,8 +16,8 @@ def main():
     SN = input("SN?:")
     file_out = pd.ExcelWriter("bias_optim" + SN + ".xlsx")
 
-        trf = SHF("192.168.100.1")
-        tmix = Mixer("192.168.100.1")
+    trf = SHF("192.168.100.1")
+    tmix = Mixer("192.168.100.1")
     pol = input("Pol H 1 ,v 0?")
     shf_id = int(pol)
     info = input("path (0 1 2 3): ")
@@ -81,15 +81,18 @@ def main():
             if new_atten < 0:
                 new_atten = 0
 
-            trf.set_rf_tx_attenuator(shf_id, path, new_atten,True)
+            trf.set_rf_tx_attenuator(shf_id, path, new_atten, True)
+
             print("Set to new atten = ", new_atten)
-            time.sleep(1)
+            trf.set_mode("rx", [shf_id])
+            time.sleep(0.4)
+            trf.set_mode("tx", [shf_id])
+
             read_atten = trf.get_rf_tx_attenuator(shf_id, path)
             print("Read atten RF board = ", read_atten)
-            
+
             time.sleep(0.5)
             results = fsw.get_wlan_results()
-            
 
             rms_pwr2 = results["avg rms power"]
             evm_meas2 = results["avg EVM all"]
