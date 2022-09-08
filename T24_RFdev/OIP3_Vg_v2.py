@@ -114,14 +114,24 @@ def main():
             i_read3 = dmm3.get_reading()
             i_read3 = round(abs(float(i_read3) * 1000), 2)
             id_out_v3.append(i_read3)
-
+        vg3_st = np.ones(len(vg12_range)) * vg3
         out_np = np.column_stack(
-            [vg12_range, id_out_v12, id_out_v3, pwr_tone1, pwr_tone2, pwr_im1, pwr_im2]
+            [
+                vg12_range,
+                vg3_st,
+                id_out_v12,
+                id_out_v3,
+                pwr_tone1,
+                pwr_tone2,
+                pwr_im1,
+                pwr_im2,
+            ]
         )
         out_df = pd.DataFrame(
             out_np,
             columns=[
-                "vg12_m",
+                "vg12 (V)",
+                "vg3 (V)",
                 "id12 (mA)",
                 "id3_m (mA)",
                 "Tone 1 (dBm)",
