@@ -114,48 +114,25 @@ def main():
             i_read3 = dmm3.get_reading()
             i_read3 = round(abs(float(i_read3) * 1000), 2)
             id_out_v3.append(i_read3)
-        pwr_tone1_m.append(pwr_tone1)
-        pwr_tone2_m.append(pwr_tone2)
-        pwr_im1_m.append(pwr_im1)
-        pwr_im2_m.append(pwr_im2)
-        id_out_m12.append(id_out_v12)
-        id_out_m3.append(id_out_v3)
 
-    # Set the BKs to their initial values
-    vg12_bk.set_voltage(vg12_range[0])
-    time.sleep(2)
-    vg3_bk.set_voltage(vg3_range[0])
+        out_np = np.column_stack(
+            [vg12_range, id_out_v12, id_out_v3, pwr_tone1, pwr_tone2, pwr_im1, pwr_im2]
+        )
+        out_df = pd.DataFrame(
+            out_np,
+            columns=[
+                "vg12_m",
+                "id12 (mA)",
+                "id3_m (mA)",
+                "Tone 1 (dBm)",
+                "Tone 2 (dBm)",
+                "IM 1 (dBm)",
+                "IM2 (dBm)",
+            ],
+        )
 
-    # Store each parameter on its own tab
-    out_np = np.column_stack(pwr_tone1_m)
-    out_df = pd.DataFrame(out_np, columns=vg3_range, index=vg12_range)
-    sheet_name = "Tone 1 ouput power (dBm) "
-    out_df.to_excel(file_out, sheet_name)
-
-    out_np = np.column_stack(pwr_tone2_m)
-    out_df = pd.DataFrame(out_np, columns=vg3_range, index=vg12_range)
-    sheet_name = "Tone 2 ouput power (dBm) "
-    out_df.to_excel(file_out, sheet_name)
-
-    out_np = np.column_stack(pwr_im1_m)
-    out_df = pd.DataFrame(out_np, columns=vg3_range, index=vg12_range)
-    sheet_name = "IM 1 ouput power level (dBm) "
-    out_df.to_excel(file_out, sheet_name)
-
-    out_np = np.column_stack(pwr_im2_m)
-    out_df = pd.DataFrame(out_np, columns=vg3_range, index=vg12_range)
-    sheet_name = "IM 2 ouput power level (dBm) "
-    out_df.to_excel(file_out, sheet_name)
-
-    out_np = np.column_stack(id_out_m3)
-    out_df = pd.DataFrame(out_np, columns=vg3_range, index=vg12_range)
-    sheet_name = "Id3 (mA)"
-    out_df.to_excel(file_out, sheet_name)
-
-    out_np = np.column_stack(id_out_m12)
-    out_df = pd.DataFrame(out_np, columns=vg3_range, index=vg12_range)
-    sheet_name = "Id12 (mA)"
-    out_df.to_excel(file_out, sheet_name)
+        sheet_name = "Vg3 = " + str(round(vg3, 3))
+        out_df.to_excel(file_out, sheet_name)
 
     MXG1.off()
     MXG2.off()
